@@ -3,6 +3,7 @@ package com.ticketmanager.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Incident {
 
@@ -31,7 +32,7 @@ public class Incident {
         this.logList.add(log);
     }
 
-    public int getIdTicket() {
+    public Predicate<? super Incident> getIdTicket() {
         return idTicket;
     }
 
