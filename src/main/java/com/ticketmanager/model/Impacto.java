@@ -1,5 +1,5 @@
 package com.ticketmanager.model;
 
 public enum Impacto {
-    ALTO, MÉDIO, BAIXO
+    ALTO, MEDIO, BAIXO
 }
