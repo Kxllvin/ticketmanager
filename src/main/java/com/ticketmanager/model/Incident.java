@@ -1,6 +1,7 @@
 package com.ticketmanager.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Incident {
     private Status status;
     private Impacto impacto;
     private List<String> logList;
-    private LocalDateTime dataHora;
+    private String dataHora;
     
 
     public Incident(String desc, int idTicket, String titulo, String responsible, Status status, Impacto impacto) {
@@ -24,7 +25,8 @@ public class Incident {
         this.impacto = impacto;
         this.responsible = responsible;
         this.logList = new ArrayList<>();
-        this.dataHora = LocalDateTime.now();
+        this.dataHora = LocalDateTime.now()
+                        .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 
     public void addLog(String log) {
@@ -80,7 +82,8 @@ public class Incident {
     }
 
     public void setDataHora(LocalDateTime dataHora) {
-        this.dataHora = LocalDateTime.now();
+        this.dataHora = LocalDateTime.now()
+                        .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 
     public String getResponsible() {
@@ -91,7 +94,7 @@ public class Incident {
         this.responsible = responsible;
     }
 
-    public LocalDateTime getDataHora() {
+    public String getDataHora() {
         return dataHora;
     }
    
