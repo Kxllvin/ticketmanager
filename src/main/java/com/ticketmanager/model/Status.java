@@ -1,5 +1,5 @@
 package com.ticketmanager.model;
 
 public enum Status {
-    ABERTO, EM_ANDAMENTO, RESOLVIDO
+    OPEN, IN_PROGRESS, RESOLVED
 }
