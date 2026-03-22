@@ -1,28 +1,32 @@
 # 🎫 TicketManager
 
-A Java-based incident management system designed to register, track, and notify teams about incidents in real time — with email and desktop notifications.
+A Java-based incident management system designed to register and track incidents, with planned support for email and desktop notifications.
+
+> ⚠️ **Work in Progress** — This project is currently under active development. The core CRUD is functional, but some features are still being implemented.
 
 ---
 
 ## 📌 About the Project
 
-TicketManager is a desktop application built with plain Java and Maven, focused on incident lifecycle management. It allows users to open incidents, assign responsibles, classify impact levels, and receive instant notifications — all persisted locally via JSON.
+TicketManager is a CLI application built with plain Java and Maven, focused on incident lifecycle management. It allows users to open incidents, assign responsibles, classify impact levels, and track status — all persisted locally via JSON.
 
-This project is currently under active development as part of a Java learning journey, following clean architecture principles and market-standard conventions.
+This project was built as part of a Java learning journey, following clean architecture principles and market-standard conventions.
 
 ---
 
 ## 🚀 Features
 
-- [x] Incident registration with title, description, impact, and responsible
+- [x] Interactive menu with CRUD operations
+- [x] Incident registration with title, description, impact and responsible
 - [x] Automatic timestamp on incident creation
 - [x] Impact classification (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`)
 - [x] Status tracking (`OPEN`, `IN_PROGRESS`, `RESOLVED`)
 - [x] Incident log entries
-- [x] JSON-based local persistence
+- [x] JSON-based local persistence with Gson
+- [x] Search by ID with Optional
+- [x] Continuous menu loop with exit option
 - [ ] Email notifications
 - [ ] Desktop notifications
-- [ ] Service layer (in progress)
 
 ---
 
@@ -42,10 +46,8 @@ ticketmanager/
 │               │   └── IncidentRepository.java
 │               ├── service/
 │               │   ├── IncidentService.java
-│               │   └── NotificacaoService.java
-│               └── Main.java
-├── data/
-│   └── incidents.json
+│               │   └── NotificacaoService.java (upcoming)
+│               └── App.java
 └── pom.xml
 ```
 
@@ -79,11 +81,11 @@ git clone https://github.com/Kxllvin/ticketmanager.git
 # Navigate to the project folder
 cd ticketmanager
 
-# Build the project
-mvn clean compile
+# Build and run (Linux/Mac)
+mvn compile exec:java -Dexec.mainClass="com.ticketmanager.App"
 
-# Run the application
-mvn exec:java -Dexec.mainClass="com.ticketmanager.Main"
+# Build and run (Windows PowerShell)
+mvn compile "-Dexec.mainClass=com.ticketmanager.App" exec:java
 ```
 
 ---
@@ -92,10 +94,10 @@ mvn exec:java -Dexec.mainClass="com.ticketmanager.Main"
 
 TicketManager follows a layered architecture based on the **Single Responsibility Principle (SRP)**:
 
-- **Model** — Defines what an incident is (data structure)
+- **Model** — Defines what an incident is (data structure and enums)
 - **Repository** — Handles data persistence (read/write JSON)
 - **Service** — Contains business logic and orchestrates actions
-- **Main** — Application entry point
+- **App** — Application entry point with interactive menu
 
 ---
 
@@ -105,4 +107,4 @@ This project is intended for educational purposes.
 
 ---
 
-> Developed by [Kelvin](https://github.com/Kxllvin) · Java Student · 2025
+> Developed by [Kelvin](https://github.com/Kxllvin) · Java Backend Student · 2026
