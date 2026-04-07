@@ -39,8 +39,12 @@ public class App
             case 1 -> {
                 System.out.println("ABERTURA DE TICKET:");
                 
-                idTicket = incidenteService.showAll().size() + 1;
-
+                idTicket = incidenteService.showAll()
+		    					.stream()
+		    					.mapToInt(incident -> incident.getIdTicket())
+		    					.max()
+		    					.orElse(0) + 1;
+                
                 System.out.println("Título: ");
                 titulo = scanner.nextLine();
 
@@ -50,14 +54,11 @@ public class App
                 System.out.println("Responsável: ");
                 responsible = scanner.nextLine();
 
-                System.out.println("Status: ");
-                Status status = Status.valueOf(scanner.nextLine().toUpperCase());
-
                 System.out.println("Impacto: ");
                 Impacto impacto = Impacto.valueOf(scanner.nextLine().toUpperCase());
                 
-                Incident incident = new Incident(desc, idTicket, titulo, responsible, status, impacto);
-                incidenteService.registrate(incident);
+                Incident incident = new Incident(desc, idTicket, titulo, responsible, impacto);
+                incidenteService.register(incident);
             }
 
             case 2 -> {

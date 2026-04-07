@@ -14,7 +14,7 @@ public class IncidentService {
         this.repository = new IncidentRepository();
     }
 
-    public void registrate(Incident incident){
+    public void register(Incident incident){
         repository.save(incident);
     }
 
