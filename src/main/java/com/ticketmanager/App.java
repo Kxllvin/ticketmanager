@@ -109,8 +109,14 @@ public class App
                 System.out.println("Informe o ID: ");
                 int removeId = scanner.nextInt();
                 scanner.nextLine();
-                incidenteService.remove(removeId);
-                System.out.println("Incidente removido.");
+                incidenteService.showById(removeId).ifPresentOrElse(
+                	incident -> {
+                		incidenteService.remove(removeId);
+                        System.out.println("Incidente removido.");
+                	},
+                	() -> System.out.println("Incidente não encontrado.")
+                );
+                }
                     
             } default -> {
                 System.out.println("Encerrando...");
