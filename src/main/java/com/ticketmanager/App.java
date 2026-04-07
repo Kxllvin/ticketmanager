@@ -9,8 +9,7 @@ import com.ticketmanager.model.Incident;
 import com.ticketmanager.model.Status;
 import com.ticketmanager.service.IncidentService;
 
-public class App 
-{
+public class App {
     public static void main( String[] args ) {
         
         IncidentService incidenteService = new IncidentService();
@@ -18,6 +17,7 @@ public class App
         String titulo;
         String desc;
         String responsible;
+        Impacto impacto = null;
         Scanner scanner = new Scanner(System.in);
 
         while (true){
@@ -54,8 +54,33 @@ public class App
                 System.out.println("Responsável: ");
                 responsible = scanner.nextLine();
 
-                System.out.println("Impacto: ");
-                Impacto impacto = Impacto.valueOf(scanner.nextLine().toUpperCase());
+                System.out.println("Impacto:");
+                System.out.println("1 - LOW");
+                System.out.println("2 - MEDIUM");
+                System.out.println("3 - HIGH");
+                System.out.println("4 - CRITICAL");
+                System.out.println("Escolha uma opção: ");
+                //= Impacto.valueOf(scanner.nextLine().toUpperCase());
+                
+                while (true) {
+                	
+                int impactoOpcao = scanner.nextInt();
+                scanner.nextLine();
+                
+                if (impactoOpcao < 1 || impactoOpcao > 4) {
+                	System.out.println("Opção inválida. Escolha entre 1 e 4");
+                	continue;
+                }
+                
+                impacto = switch (impactoOpcao) {
+		            case 1 -> Impacto.LOW;
+		            case 2 -> Impacto.MEDIUM;
+		            case 3 -> Impacto.HIGH;
+		            case 4 -> Impacto.CRITICAL;
+		            default -> Impacto.LOW;	
+                	};
+                break;
+                }
                 
                 Incident incident = new Incident(desc, idTicket, titulo, responsible, impacto);
                 incidenteService.register(incident);
@@ -118,14 +143,13 @@ public class App
                 );
                 }
                     
-            } default -> {
+             default -> {
                 System.out.println("Encerrando...");
                 scanner.close();
             }
-        }
+        
 
-           /* if(option != 1 && option != 2 && option != 3 && option != 4){
-                return; */
             }
         }
+    }
 }
