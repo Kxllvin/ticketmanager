@@ -17,11 +17,11 @@ public class Incident {
     private String dataHora;
     
 
-    public Incident(String desc, int idTicket, String titulo, String responsible, Status status, Impacto impacto) {
+    public Incident(String desc, int idTicket, String titulo, String responsible, Impacto impacto) {
         this.desc = desc;
         this.idTicket = idTicket;
         this.titulo = titulo;
-        this.status = status;
+        this.status = Status.OPEN;
         this.impacto = impacto;
         this.responsible = responsible;
         this.logList = new ArrayList<>();

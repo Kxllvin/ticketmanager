@@ -9,8 +9,7 @@ import com.ticketmanager.model.Incident;
 import com.ticketmanager.model.Status;
 import com.ticketmanager.service.IncidentService;
 
-public class App 
-{
+public class App {
     public static void main( String[] args ) {
         
         IncidentService incidenteService = new IncidentService();
@@ -18,6 +17,7 @@ public class App
         String titulo;
         String desc;
         String responsible;
+        Impacto impacto = null;
         Scanner scanner = new Scanner(System.in);
 
         while (true){
@@ -39,8 +39,12 @@ public class App
             case 1 -> {
                 System.out.println("ABERTURA DE TICKET:");
                 
-                idTicket = incidenteService.showAll().size() + 1;
-
+                idTicket = incidenteService.showAll()
+		    					.stream()
+		    					.mapToInt(incident -> incident.getIdTicket())
+		    					.max()
+		    					.orElse(0) + 1;
+                
                 System.out.println("Título: ");
                 titulo = scanner.nextLine();
 
@@ -50,14 +54,36 @@ public class App
                 System.out.println("Responsável: ");
                 responsible = scanner.nextLine();
 
-                System.out.println("Status: ");
-                Status status = Status.valueOf(scanner.nextLine().toUpperCase());
-
-                System.out.println("Impacto: ");
-                Impacto impacto = Impacto.valueOf(scanner.nextLine().toUpperCase());
+                System.out.println("Impacto:");
+                System.out.println("1 - LOW");
+                System.out.println("2 - MEDIUM");
+                System.out.println("3 - HIGH");
+                System.out.println("4 - CRITICAL");
+                System.out.println("Escolha uma opção: ");
+                //= Impacto.valueOf(scanner.nextLine().toUpperCase());
                 
-                Incident incident = new Incident(desc, idTicket, titulo, responsible, status, impacto);
-                incidenteService.registrate(incident);
+                while (true) {
+                	
+                int impactoOpcao = scanner.nextInt();
+                scanner.nextLine();
+                
+                if (impactoOpcao < 1 || impactoOpcao > 4) {
+                	System.out.println("Opção inválida. Escolha entre 1 e 4");
+                	continue;
+                }
+                
+                impacto = switch (impactoOpcao) {
+		            case 1 -> Impacto.LOW;
+		            case 2 -> Impacto.MEDIUM;
+		            case 3 -> Impacto.HIGH;
+		            case 4 -> Impacto.CRITICAL;
+		            default -> Impacto.LOW;	
+                	};
+                break;
+                }
+                
+                Incident incident = new Incident(desc, idTicket, titulo, responsible, impacto);
+                incidenteService.register(incident);
             }
 
             case 2 -> {
@@ -108,17 +134,22 @@ public class App
                 System.out.println("Informe o ID: ");
                 int removeId = scanner.nextInt();
                 scanner.nextLine();
-                incidenteService.remove(removeId);
-                System.out.println("Incidente removido.");
+                incidenteService.showById(removeId).ifPresentOrElse(
+                	incident -> {
+                		incidenteService.remove(removeId);
+                        System.out.println("Incidente removido.");
+                	},
+                	() -> System.out.println("Incidente não encontrado.")
+                );
+                }
                     
-            } default -> {
+             default -> {
                 System.out.println("Encerrando...");
                 scanner.close();
             }
-        }
+        
 
-           /* if(option != 1 && option != 2 && option != 3 && option != 4){
-                return; */
             }
         }
+    }
 }
