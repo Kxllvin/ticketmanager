@@ -1,6 +1,7 @@
 com\ticketmanager\repository\IncidentRepository$1.class
 com\ticketmanager\repository\IncidentRepository$4.class
 com\ticketmanager\repository\IncidentRepository$2.class
+com\ticketmanager\repository\IncidentRepository$5.class
 com\ticketmanager\model\Status.class
 com\ticketmanager\repository\IncidentRepository.class
 com\ticketmanager\model\Impacto.class

@@ -84,4 +84,27 @@ public class IncidentRepository {
             e.printStackTrace();
         }
     }
+        
+        public void updateIncident(int id, Incident updatedIncident) {
+        try {
+        	List<Incident> incidents = new ArrayList<>();
+            FileReader reader = new FileReader(FILE_PATH);
+            incidents = gson.fromJson(reader, new TypeToken<List<Incident>>(){}.getType());
+            reader.close();
+            if (incidents == null)
+                incidents = new ArrayList<>();
+
+            for (int i = 0; i < incidents.size(); i++) {
+                if (incidents.get(i).getIdTicket() == id){
+                    incidents.set(i, updatedIncident);               
+                    break;
+                }
+            }
+            FileWriter writer = new FileWriter(FILE_PATH);
+            writer.write(gson.toJson(incidents));
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
