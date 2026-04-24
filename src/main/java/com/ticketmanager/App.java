@@ -28,6 +28,7 @@ public class App {
         System.out.println("3 - Buscar por ID");
         System.out.println("4 - Remover incidente");
         System.out.println("5 - Atualizar incidente");
+        System.out.println("6 - Finalizar incidente");
         System.out.println("0 - Sair");
         System.out.println("Escolha uma opção: ");
 
