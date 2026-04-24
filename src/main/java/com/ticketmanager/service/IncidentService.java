@@ -63,6 +63,24 @@ public class IncidentService {
     	repository.updateIncident(id, updatedIncident);
     }
     
+	public void closeIncident(int id, String closedBy, String finalDescription) {
+    	
+    	Optional<Incident> original = showById(id);
+    	
+    	if (original.get().getStatus() == Status.RESOLVED) 
+    		return;
+    	
+    	original.get().setStatus(Status.RESOLVED);
+    	
+    	String timestamp = LocalDateTime.now()
+                		   .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+    	
+    	original.get().addLog(timestamp + "\n - Incidente encerrado por: " + closedBy 
+    							+ "\n Resolução: " + finalDescription); 
+    	
+    	repository.updateIncident(id, original.get());
+    }
+    
     public void remove(int id){
     	repository.delete(id);
     }

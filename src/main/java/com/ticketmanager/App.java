@@ -215,6 +215,41 @@ public class App {
                     );
                 
             }
+            
+            case 6 ->{
+            	System.out.println("FINALIZAR INCIDENTE");
+            	
+                System.out.println("Informe o ID: ");
+                int clsIncident = scanner.nextInt();
+                scanner.nextLine();
+                incidenteService.showById(clsIncident).ifPresentOrElse(
+                    	incident -> {
+                            System.out.println(String.format("%-10s %-25s %-15s %-10s",
+                                    incident.getIdTicket(),   
+                                    incident.getDataHora(),
+                                    incident.getStatus(),
+                                    incident.getImpacto()));
+                                System.out.println(incident.getTitulo());
+                                System.out.println(incident.getDesc());
+                                System.out.println(incident.getResponsible());
+                                System.out.println("---");
+
+                                
+                            System.out.println("Quem está encerrando: ");
+                            String closedBy = scanner.nextLine();
+                            
+                            System.out.println("Resolução: ");
+                            String finalDescription = scanner.nextLine();
+
+                            incidenteService.closeIncident(clsIncident, closedBy, finalDescription);
+                            
+                            },
+                                
+                    	() -> System.out.println("Incidente não encontrado.")
+                    );
+            	
+                break;
+            }
                     
              default -> {
                 System.out.println("Encerrando...");
